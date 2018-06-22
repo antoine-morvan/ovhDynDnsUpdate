@@ -1,0 +1,26 @@
+#!/bin/bash
+
+LAST_IP_FILE=/var/cache/dyndns_ovh_last_ip
+LOG_FILE=/var/log/dyndns_ovh.log
+CONF_FILE=/etc/dyndns_ovh.conf
+PUBLIC_IP=$(dig +short myip.opendns.com @resolver1.opendns.com)
+DATE=$(date +%F-%H:%M:%S)
+
+echo -n "${DATE}	${PUBLIC_IP}	" >> "${LOG_FILE}"
+
+if [ -e $LAST_IP_FILE ]; then
+	LAST_PUBLIC_IP=$(cat $LAST_IP_FILE)
+	if [ "$PUBLIC_IP" == "$LAST_PUBLIC_IP" ]; then
+		echo "IP did not change, skip update" >> "${LOG_FILE}"
+		exit 0;
+	fi
+fi
+echo "${PUBLIC_IP}" > "${LAST_IP_FILE}"
+
+DYNDNS_USER=$(cat ${CONF_FILE} | grep "^USER=" | cut -d'=' -f2-)
+DYNDNS_PASS=$(cat ${CONF_FILE} | grep "^PASS=" | cut -d'=' -f2-)
+DYNDNS_DOMAIN=$(cat ${CONF_FILE} | grep "^DOMAIN=" | cut -d'=' -f2-)
+
+# URL is taken from https://docs.ovh.com/fr/domains/utilisation-dynhost/
+curl -u ${DYNDNS_USER}:${DYNDNS_PASS} "http://www.ovh.com/nic/update?system=dyndns&hostname=${DYNDNS_DOMAIN}&myip=${PUBLIC_IP}" >> "${LOG_FILE}"
+echo "" >> "${LOG_FILE}"
