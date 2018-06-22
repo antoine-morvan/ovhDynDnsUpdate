@@ -4,4 +4,6 @@ Update process is described here: https://docs.ovh.com/fr/domains/utilisation-dy
 
 The script actually checks few things then simply call the following command:
 
-'''curl -u ${DYNDNS_USER}:${DYNDNS_PASS} "http://www.ovh.com/nic/update?system=dyndns&hostname=${DYNDNS_DOMAIN}&myip=${PUBLIC_IP}"'''
+'''
+curl -u ${DYNDNS_USER}:${DYNDNS_PASS} "http://www.ovh.com/nic/update?system=dyndns&hostname=${DYNDNS_DOMAIN}&myip=${PUBLIC_IP}"
+'''
