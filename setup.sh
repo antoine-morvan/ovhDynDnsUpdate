@@ -14,7 +14,7 @@ read -s -p "OVH Password: " DYNDNS_PASSWORD
 echo ""
 read -p "OVH Domain Name: " DYNDNS_DOMAIN
 
-cat > toto << EOF
+cat > /etc/dyndns_ovh.conf << EOF
 USER=$DYNDNS_USER
 PASS=$DYNDNS_PASSWORD
 DOMAIN=$DYNDNS_DOMAIN
