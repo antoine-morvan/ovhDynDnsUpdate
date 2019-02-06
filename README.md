@@ -9,5 +9,5 @@ curl -u ${DYNDNS_USER}:${DYNDNS_PASS} "http://www.ovh.com/nic/update?system=dynd
 
 The public IP is resolved using opendns servers:
 ```
-PUBLIC_IP=$(dig +short myip.opendns.com @resolver1.opendns.com)
+PUBLIC_IP=$(dig -4 +short myip.opendns.com ANY @resolver1.opendns.com)
 ```
