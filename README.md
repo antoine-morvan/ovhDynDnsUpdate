@@ -7,7 +7,9 @@ The script actually checks few things then simply call the following command:
 curl -u ${DYNDNS_USER}:${DYNDNS_PASS} "http://www.ovh.com/nic/update?system=dyndns&hostname=${DYNDNS_DOMAIN}&myip=${PUBLIC_IP}"
 ```
 
-The public IP is resolved using opendns servers:
+The public IP is resolved using **ifconfig.me** courtesy:
 ```
-PUBLIC_IP=$(dig -4 +short myip.opendns.com ANY @resolver1.opendns.com)
+# opendns did not answer :(
+# PUBLIC_IP=$(dig -4 +short myip.opendns.com ANY @resolver1.opendns.com)
+PUBLIC_IP=$(curl ifconfig.me)
 ```
