@@ -1,8 +1,8 @@
 #!/bin/bash
 
-[ "$(whoami)" != root ] && sudo "$O"
+[ "$(whoami)" != root ] && sudo "$0" && exit 0
 
-DIR=$(cd $(dirname $0) && pwd)
+DIR=$(dirname $(readlink -f $BASH_SOURCE))
 
 cp ${DIR}/update_ovh_dyndns /usr/local/bin/update_ovh_dyndns
 chmod +x /usr/local/bin/update_ovh_dyndns
