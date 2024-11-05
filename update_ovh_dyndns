@@ -5,8 +5,6 @@ LOG_FILE=/var/log/dyndns_ovh.log
 CONF_FILE=/etc/dyndns_ovh.conf
 DATE=$(date +%F-%H:%M:%S)
 
-DIGFOUND=false
-CURLFOUND=false
 if type -f dig &> /dev/null; then
     function publicip() {
 		dig +short myip.opendns.com @resolver1.opendns.com -4
