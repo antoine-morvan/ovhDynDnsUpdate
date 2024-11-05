@@ -4,8 +4,9 @@ LAST_IP_FILE=/var/cache/dyndns_ovh_last_ip
 LOG_FILE=/var/log/dyndns_ovh.log
 CONF_FILE=/etc/dyndns_ovh.conf
 
-# PUBLIC_IP=$(dig -4 +short myip.opendns.com ANY @resolver1.opendns.com)
-PUBLIC_IP=$(curl ifconfig.me)
+# PUBLIC_IP=$(curl ifconfig.me)
+# PUBLIC_IP=$(curl 4.icanhazip.com)
+PUBLIC_IP=$(dig +short myip.opendns.com @resolver1.opendns.com -4)
 
 DATE=$(date +%F-%H:%M:%S)
 
