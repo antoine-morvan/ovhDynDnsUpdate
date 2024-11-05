@@ -3,12 +3,25 @@
 LAST_IP_FILE=/var/cache/dyndns_ovh_last_ip
 LOG_FILE=/var/log/dyndns_ovh.log
 CONF_FILE=/etc/dyndns_ovh.conf
-
-# PUBLIC_IP=$(curl ifconfig.me)
-# PUBLIC_IP=$(curl 4.icanhazip.com)
-PUBLIC_IP=$(dig +short myip.opendns.com @resolver1.opendns.com -4)
-
 DATE=$(date +%F-%H:%M:%S)
+
+DIGFOUND=false
+CURLFOUND=false
+if type -f dig &> /dev/null; then
+    function publicip() {
+		dig +short myip.opendns.com @resolver1.opendns.com -4
+	}
+else
+	if type -f curl &> /dev/null; then
+		function publicip() {
+			curl 4.icanhazip.com
+		}
+	else
+		echo -n "${DATE}	ERROR: Could not find curl nor dig" >> "${LOG_FILE}"
+	fi
+fi
+
+PUBLIC_IP=$(publicip)
 
 echo -n "${DATE}	${PUBLIC_IP}	" >> "${LOG_FILE}"
 
